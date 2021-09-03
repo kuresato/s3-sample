@@ -1,0 +1,15 @@
+FROM amazonlinux:2
+
+WORKDIR /tmp
+
+# AWS SDK for C++ をビルド＆インストール
+RUN yum update -y && \
+    yum groupinstall -y "Development Tools" && \
+    yum install -y openssl-devel libcurl-devel cmake3
+RUN git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp
+RUN mkdir aws-sdk-cpp-build && \
+    cd aws-sdk-cpp-build && \
+    cmake3 /tmp/aws-sdk-cpp -DCMAKE_BUILD_TYPE=Debug -DBUILD_ONLY="s3;sts" && \
+    make && \
+    make install
+

@@ -1,0 +1,12 @@
+FROM aws-sdk-cpp-s3:latest
+
+WORKDIR /tmp
+
+# S3バケット一覧表示のサンプルをビルド
+RUN git clone https://github.com/awsdocs/aws-doc-sdk-examples && \
+    cd aws-doc-sdk-examples/cpp/example_code/s3 && \
+    cmake3 . && \
+    make
+
+CMD /tmp/aws-doc-sdk-examples/cpp/example_code/s3/run_list_buckets
+
